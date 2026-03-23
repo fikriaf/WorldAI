@@ -8,7 +8,7 @@ class OpenRouterClient:
         self,
         api_key: Optional[str] = None,
         base_url: str = "https://openrouter.ai/api/v1",
-        default_model: str = "anthropic/claude-3-haiku",
+        default_model: str = "stepfun/step-3.5-flash:free",
     ):
         self.api_key = api_key or os.environ.get("OPENROUTER_API_KEY", "")
         self.base_url = base_url
@@ -64,7 +64,7 @@ Stage: {agent_data.get("stage", "unknown")}
 
 Provide a brief species name (1-3 words) that describes this organism's characteristics."""
 
-        return self.generate(prompt, model="anthropic/claude-3-haiku")
+        return self.generate(prompt)
 
     def narrate_event(self, event: dict) -> Optional[str]:
         prompt = f"""Write a brief, scientific narration of this event in the simulation:
