@@ -1,0 +1,43 @@
+[project]
+name = "world-ai-simulation"
+version = "0.1.0"
+description = "World.ai Simulation Engine"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=1.26",
+    "numba>=0.59",
+    "torch>=2.3",
+    "redis>=5.0",
+    "sqlalchemy>=2.0",
+    "alembic>=1.13",
+    "asyncpg>=0.29",
+    "qdrant-client>=1.7",
+    "pydantic>=2.5",
+    "pyyaml>=6.0",
+    "pytest>=9.0.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "black>=24.0",
+    "ruff>=0.3",
+    "mypy>=1.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src.simulation"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.mypy]
+python-version = "3.12"
+warn_return_any = true
+warn_unused_ignores = true
