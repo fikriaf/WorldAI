@@ -47,7 +47,7 @@ class WorldStatsResponse(BaseModel):
 
 @router.post("/start")
 async def start_world(req: WorldStartRequest):
-    from .main import world_manager
+    from api.main import world_manager
 
     try:
         world_id = await world_manager.create_world(
@@ -63,7 +63,7 @@ async def start_world(req: WorldStartRequest):
 
 @router.post("/stop")
 async def stop_world():
-    from .main import world_manager
+    from api.main import world_manager
 
     await world_manager.stop_world()
     return {"status": "stopped"}
@@ -71,7 +71,7 @@ async def stop_world():
 
 @router.get("/state", response_model=WorldStateResponse)
 async def get_state():
-    from .main import world_manager
+    from api.main import world_manager
 
     state = await world_manager.get_state()
     if state is None:
@@ -81,7 +81,7 @@ async def get_state():
 
 @router.get("/stats", response_model=WorldStatsResponse)
 async def get_stats():
-    from .main import world_manager
+    from api.main import world_manager
 
     stats = await world_manager.get_stats()
     if stats is None:
@@ -91,7 +91,7 @@ async def get_stats():
 
 @router.post("/step")
 async def step_world():
-    from .main import world_manager
+    from api.main import world_manager
 
     try:
         result = await world_manager.step()
@@ -102,7 +102,7 @@ async def step_world():
 
 @router.post("/run")
 async def run_world(ticks: int = 100):
-    from .main import world_manager
+    from api.main import world_manager
 
     try:
         result = await world_manager.run(ticks)
@@ -113,7 +113,7 @@ async def run_world(ticks: int = 100):
 
 @router.get("/agent/{agent_id}")
 async def get_agent(agent_id: str):
-    from .main import world_manager
+    from api.main import world_manager
 
     agent = await world_manager.get_agent(agent_id)
     if agent is None:
@@ -123,7 +123,7 @@ async def get_agent(agent_id: str):
 
 @router.get("/events")
 async def get_events(limit: int = 50):
-    from .main import world_manager
+    from api.main import world_manager
 
     events = await world_manager.get_recent_events(limit)
     return {"events": events}

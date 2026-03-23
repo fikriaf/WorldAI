@@ -56,7 +56,7 @@ async def disable_god_mode():
 
 @router.post("/intervene")
 async def intervene(req: InterventionRequest):
-    from .main import world_manager
+    from api.main import world_manager
 
     if world_manager.world is None:
         raise HTTPException(status_code=404, detail="World not running")

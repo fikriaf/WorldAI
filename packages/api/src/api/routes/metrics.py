@@ -18,7 +18,7 @@ class MetricsResponse(BaseModel):
 
 @router.get("", response_model=MetricsResponse)
 async def get_metrics():
-    from .main import world_manager
+    from api.main import world_manager
 
     if world_manager.world is None:
         raise HTTPException(status_code=404, detail="World not running")
@@ -57,7 +57,7 @@ async def get_metrics():
 
 @router.get("/history")
 async def get_metrics_history(limit: int = 100):
-    from .main import world_manager
+    from api.main import world_manager
 
     if world_manager.world is None:
         raise HTTPException(status_code=404, detail="World not running")
@@ -68,7 +68,7 @@ async def get_metrics_history(limit: int = 100):
 
 @router.get("/entropy")
 async def get_entropy():
-    from .main import world_manager
+    from api.main import world_manager
 
     if world_manager.world is None:
         raise HTTPException(status_code=404, detail="World not running")

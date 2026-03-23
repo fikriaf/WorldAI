@@ -12,9 +12,10 @@ COPY packages/api/pyproject.toml /app/api/
 COPY packages/api/src /app/api/src
 
 RUN pip install uv && \
-    cd /app/simulation && uv sync && \
+    cd /app/simulation && uv sync --no-install-project && \
     cd /app/api && uv sync
 
 ENV PYTHONPATH=/app/simulation/src:/app/api/src
+ENV PATH="/app/api/.venv/bin:$PATH"
 
 CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
