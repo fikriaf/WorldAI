@@ -71,7 +71,17 @@ class WorldManager:
         if self._redis_enabled:
             self._redis.clear_all()
 
+        # Start continuous background loop
+        self._task = asyncio.create_task(self._run_loop())
+
         return self.world_id
+
+    async def _run_loop(self):
+        """Continuous background loop that runs simulation ticks."""
+        while self.running and self.world is not None:
+            await self._step_internal()
+            # Minimal yield to prevent blocking - simulation speed is controlled by tick complexity
+            await asyncio.sleep(0)
 
     async def stop_world(self):
         self.running = False
@@ -105,6 +115,13 @@ class WorldManager:
         if self.world is None:
             return {"error": "World not running"}
 
+        if self._task is not None and not self._task.done():
+            return {"error": "World running in background mode. Use stop first."}
+
+        return await self._step_internal()
+
+    async def _step_internal(self) -> dict:
+        """Internal step that does the actual tick work."""
         events = self.world.step()
 
         for event in events:
